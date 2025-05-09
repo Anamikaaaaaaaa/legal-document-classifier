@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Multilingual Legal Document Classifier</title>
+  <!-- Link to Semantic UI -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+  <!-- Link to your external CSS -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Chart.js for visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="ui container">
+    <h2 class="ui header">Multilingual Legal Document Classifier</h2>
+    <form class="ui form" method="POST">
+      <div class="field">
+        <label>Enter Legal Document Text</label>
+        <textarea name="text" rows="6" placeholder="Paste legal document text here..."></textarea>
+      </div>
+      <button class="ui button primary" type="submit">Classify Document</button>
+    </form>
+    
+    {% if result %}
+      <h3 class="ui header">Classification Results:</h3>
+      <div class="ui segment">
+        <p><strong>Input Text:</strong> {{ result.sequence }}</p>
+        <p><strong>Labels:</strong> {{ result.labels }}</p>
+        <p><strong>Scores:</strong> {{ result.scores }}</p>
+      </div>
+      
+      <!-- Canvas for Chart.js -->
+      <canvas id="scoreChart" width="400" height="200"></canvas>
+      <script>
+        // Get labels and scores from Flask as JSON data
+        const labels = {{ result.labels|tojson }};
+        const scores = {{ result.scores|tojson }};
+        
+        const ctx = document.getElementById('scoreChart').getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Confidence Scores',
+              data: scores,
+              backgroundColor: 'rgba(54, 162, 235, 0.5)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 1
+              }
+            }
+          }
+        });
+      </script>
+    {% endif %}
+  </div>
+</body>
+</html>
