@@ -34,9 +34,11 @@ Features:
 
  📫 Connect With Me
 
-- 📧 Email:  
-- 💼 LinkedIn:
+- 📧 Email: anamikaasarkar18@gmail.com
+- 💼 LinkedIn: www.linkedin.com/in/anamika-sarkar-16a103365
 
  “Law meets Language—making legal AI accessible across languages and borders.”  
 
 Thanks for stopping by! ⭐ Star the repo if you find it useful.
+
+**If you need report on this project then contact me.**
